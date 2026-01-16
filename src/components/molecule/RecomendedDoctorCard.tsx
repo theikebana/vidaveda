@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { HiArrowLongRight } from "react-icons/hi2";
+import Link from "next/link";
 
 interface DoctorProps {
   name: string;
@@ -104,23 +104,31 @@ const RecomendedDoctorCard = ({
 
       {/* Footer */}
       <div className="border-t border-[#0E311A50] px-4 sm:px-5 pt-3 pb-5 transition-all duration-300">
-        <button className="w-full flex items-center justify-center sm:justify-start gap-3 group">
-          <span className="text-[#14532D] text-sm sm:text-base transition-all duration-300 group-hover:font-medium">
-            Book Now
-          </span>
+        <Link
+          href="/knowledge-for-herbs/health-consultation"
+          className="w-full"
+        >
+          <button
+            type="button"
+            className="w-full flex items-center justify-center sm:justify-start gap-3 group"
+          >
+            <span className="text-[#14532D] text-sm sm:text-base transition-all duration-300 group-hover:font-medium">
+              Book Now
+            </span>
 
-          <Image
-            src="/icons/arrow-icon.svg"
-            alt="Arrow"
-            width={24}
-            height={24}
-            className="
-              w-5 h-5
-              transition-transform duration-300 ease-out
-              group-hover:translate-x-1
-            "
-          />
-        </button>
+            <Image
+              src="/icons/arrow-icon.svg"
+              alt="Arrow"
+              width={24}
+              height={24}
+              className="
+        w-5 h-5
+        transition-transform duration-300 ease-out
+        group-hover:translate-x-1
+      "
+            />
+          </button>
+        </Link>
       </div>
     </div>
   );
