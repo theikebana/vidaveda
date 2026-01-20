@@ -3,12 +3,17 @@ import { useState } from "react";
 import DietaryRestrictions from "./steps/DietaryRestrictions";
 import GoalsAndPreferences from "./steps/GoalsAndPreferences";
 import ChooseYourDietPlan from "./steps/ChooseYourDietPlan";
+import CreateAiDietPlan from "./steps/CreateAiDietPlan/CreateAiDietPlan";
+import HealthExpert from "./steps/HealthExperts";
 
 const steps = [
- 
+
   { label: "Goals & Preferences", component: GoalsAndPreferences },
   { label: "Dietary Restrictions", component: DietaryRestrictions },
-  { label: "Choose Your Diet Plan", component: ChooseYourDietPlan },  
+  { label: "Choose Your Diet Plan", component: ChooseYourDietPlan },
+  { label: "Create AI Diet Plan", component: CreateAiDietPlan },
+  { label: "Helath Expert", component: HealthExpert },
+
 ];
 
 const CreateDietPlanMain = () => {
@@ -33,9 +38,8 @@ const CreateDietPlanMain = () => {
               className="flex items-center gap-2 cursor-pointer"
             >
               <div
-                className={`w-3 h-3 rounded-full border-2 border-white ${
-                  activeStep === idx ? "bg-white" : ""
-                }`}
+                className={`w-3 h-3 rounded-full border-2 border-white ${activeStep === idx ? "bg-white" : ""
+                  }`}
               />
               <span
                 className={activeStep === idx ? "opacity-100" : "opacity-70"}
@@ -51,38 +55,27 @@ const CreateDietPlanMain = () => {
       <div className="bg-[#F8FAF7]  rounded-4xl border border-[#CEDCC7] p-8 pt-12">
         {StepComponent && (
           <StepComponent
-                      selectedAllergies={selectedAllergies}
-                      setSelectedAllergies={setSelectedAllergies}
-                      preference={preference}
-                      setPreference={setPreference}
-                      healthIssues={healthIssues}
-                      setHealthIssues={setHealthIssues} goal={""} setGoal={function (v: string): void {
-                          throw new Error("Function not implemented.");
-                      } } userData={{
-                          name: "",
-                          email: "",
-                          height: "",
-                          weight: "",
-                          gender: "",
-                          age: ""
-                      }} setUserData={function (v: any): void {
-                          throw new Error("Function not implemented.");
-                      } }          />
+            selectedAllergies={selectedAllergies}
+            setSelectedAllergies={setSelectedAllergies}
+            preference={preference}
+            setPreference={setPreference}
+            healthIssues={healthIssues}
+            setHealthIssues={setHealthIssues} goal={""} setGoal={function (v: string): void {
+              throw new Error("Function not implemented.");
+            }} userData={{
+              name: "",
+              email: "",
+              height: "",
+              weight: "",
+              gender: "",
+              age: ""
+            }} setUserData={function (v: any): void {
+              throw new Error("Function not implemented.");
+            }} />
         )}
 
         {/* Navigation */}
-        <div className="mt-12 flex justify-start">
-          <button
-            onClick={() =>
-              setActiveStep((prev) =>
-                Math.min(prev + 1, steps.length - 1)
-              )
-            }
-            className="bg-[#1a4d2e] text-white px-12 py-3 rounded-full cursor-pointer"
-          >
-            Next
-          </button>
-        </div>
+       
       </div>
     </div>
   );
