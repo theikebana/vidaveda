@@ -2,9 +2,12 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { MoreVertical, FileText, XCircle, RotateCcw, Check, X, Star } from "lucide-react";
 // 1. Ensure this path matches your file structure and use the correct export name
 import { ordersData } from "@/data/orderlistingdata";
+import CancelOrderModal from "@/components/molecule/CancelOrderModal";
+import RepeatOrderModal from "@/components/molecule/RepeatOrderModal";
 
 /* ================= TYPES ================= */
 type OrderItemType = {
@@ -47,26 +50,26 @@ const ReviewModal = ({ isOpen, onClose, productName }: { isOpen: boolean; onClos
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div 
+      <div
         ref={modalRef}
-        className="relative w-full max-w-2xl bg-white p-6 md:p-10 rounded-sm shadow-2xl animate-in fade-in zoom-in duration-200"
+        className="relative w-full max-w-2xl bg-white p-6  rounded-sm shadow-2xl animate-in fade-in zoom-in duration-200"
       >
         <button onClick={onClose} className="absolute right-6 top-6 text-gray-400 hover:text-black">
           <X size={28} strokeWidth={1} />
         </button>
 
-        <h2 className="text-3xl font-serif text-[#1B432C] mb-2">Write a review</h2>
-        <p className="text-gray-500 text-sm mb-10">
+        <h2 className="text-2xl font-serif text-[#1B432C] ">Write a review</h2>
+        <p className="text-gray-500 text-sm mb-4">
           Reviews help other shoppers. Please keep feedback respectful and honest.
         </p>
 
-        <div className="mb-10">
-          <h3 className="font-bold text-lg mb-4 text-[#0E311A]">Your rating</h3>
+        <div className="mb-5">
+          <h3 className="font-medium  mb-1 text-[#0E311A]">Your rating</h3>
           <div className="flex gap-2">
             {[1, 2, 3, 4, 5].map((star) => (
-              <button key={star} onClick={() => setRating(star)} className="focus:outline-none transition-transform active:scale-90">
+              <button key={star} onClick={() => setRating(star)} className="focus:outline-none cursor-pointer transition-transform active:scale-90">
                 <Star
-                  size={38}
+                  size={24}
                   fill={star <= rating ? "#4a5d23" : "none"}
                   stroke={star <= rating ? "#4a5d23" : "#4a5d23"}
                   strokeWidth={1.5}
@@ -77,18 +80,19 @@ const ReviewModal = ({ isOpen, onClose, productName }: { isOpen: boolean; onClos
         </div>
 
         <div className="mb-12">
-          <label className="block text-gray-500 text-sm mb-2">Write your review</label>
+          <label htmlFor="review-text" className="block font-medium text-[#0E311A] text-sm mb-2">Write your review</label>
           <input
+            id="review-text"
             type="text"
             value={review}
             onChange={(e) => setReview(e.target.value)}
-            className="w-full border-b border-[#E8EEE9] py-3 focus:border-[#1B432C] outline-none transition-colors text-lg text-gray-800"
+            className="w-full border-b border-[#E8EEE9] py-3 focus:border-[#1B432C] outline-none transition-colors text-black"
           />
         </div>
 
         <button
           onClick={() => { console.log({ productName, rating, review }); onClose(); }}
-          className="bg-[#1B432C] text-white px-12 py-3.5 rounded-full font-medium hover:bg-[#143321] transition-all shadow-lg active:scale-95"
+          className="bg-[#1B432C] text-white px-12 py-3.5 rounded-full cursor-pointer font-medium hover:bg-[#143321] transition-all shadow-lg active:scale-95"
         >
           Submit
         </button>
@@ -101,6 +105,8 @@ const ReviewModal = ({ isOpen, onClose, productName }: { isOpen: boolean; onClos
 const OrderItem = ({ item }: { item: OrderItemType }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [isCancelOpen, setIsCancelOpen] = useState(false);
+  const [isRepeatOpen, setIsRepeatOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -146,7 +152,7 @@ const OrderItem = ({ item }: { item: OrderItemType }) => {
             <span className="text-sm font-medium text-gray-700 capitalize">{item.status}</span>
             {item.deliveryDate && <span className="text-xs text-gray-500">{item.deliveryDate}</span>}
             {item.status === "Delivered" && (
-              <button 
+              <button
                 onClick={() => setIsReviewOpen(true)}
                 className="text-sm text-[#1B432C] underline text-left mt-1 font-medium hover:text-[#0E311A]"
               >
@@ -161,13 +167,25 @@ const OrderItem = ({ item }: { item: OrderItemType }) => {
             </button>
             {showMenu && (
               <div className="absolute right-0 top-8 w-48 bg-white border border-gray-100 shadow-xl rounded-xl z-10 py-2">
-                <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                <Link href="/invoice" className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                   <FileText size={16} className="text-[#A67C37]" /> Invoice Download
-                </button>
-                <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                </Link>
+                <button 
+                  onClick={() => {
+                    setIsRepeatOpen(true);
+                    setShowMenu(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                >
                   <RotateCcw size={16} className="text-[#A67C37]" /> Repeat Order
                 </button>
-                <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 text-red-600">
+                <button 
+                  onClick={() => {
+                    setIsCancelOpen(true);
+                    setShowMenu(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 text-red-600"
+                >
                   <XCircle size={16} /> Cancel Order
                 </button>
               </div>
@@ -176,10 +194,24 @@ const OrderItem = ({ item }: { item: OrderItemType }) => {
         </div>
       </div>
 
-      <ReviewModal 
-        isOpen={isReviewOpen} 
-        onClose={() => setIsReviewOpen(false)} 
-        productName={item.name} 
+      <ReviewModal
+        isOpen={isReviewOpen}
+        onClose={() => setIsReviewOpen(false)}
+        productName={item.name}
+      />
+      <CancelOrderModal
+        isOpen={isCancelOpen}
+        onClose={() => setIsCancelOpen(false)}
+        orderId={item.orderId}
+        productName={item.name}
+      />
+      <RepeatOrderModal
+        isOpen={isRepeatOpen}
+        onClose={() => setIsRepeatOpen(false)}
+        orderId={item.orderId}
+        productName={item.name}
+        quantity={item.quantity}
+        size={item.size}
       />
     </>
   );
@@ -192,7 +224,7 @@ export default function OrderListing() {
 
   return (
     <div className="w-full max-w-auto mx-auto p-6">
-      <div className="grid grid-cols-12 px-8 mb-4 text-xs uppercase tracking-wider font-semibold text-gray-400">
+      <div className="grid grid-cols-12 px-8 mb-4 text-sm uppercase tracking-wider font-semibold text-[#14532D]">
         <div className="col-span-3">Items</div>
         <div className="col-span-1">Size</div>
         <div className="col-span-1">Quantity</div>

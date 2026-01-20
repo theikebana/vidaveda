@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 const InvoicePage = () => {
   const data = {
@@ -24,17 +25,21 @@ const InvoicePage = () => {
   return (
     <div className="min-h-screen bg-white font-sans text-slate-800 p-4 md:p-8">
       {/* Container */}
-      <div className="max-w-4xl mx-auto border border-gray-100 shadow-sm rounded-lg overflow-hidden">
+      <div className="max-w-4xl mx-auto border border-gray-200 shadow-sm  overflow-hidden">
         
         {/* Header / Logo */}
         <div className="flex flex-col items-center py-12">
-           <div className="mb-2">
-              {/* Placeholder for SVG Logo */}
-              <div className="w-16 h-16 border-2 border-green-900 rounded-full flex items-center justify-center">
-                <span className="text-green-900 text-xs text-center font-serif">LOGO</span>
-              </div>
-           </div>
-           <h1 className="text-4xl font-serif text-[#1a3321] font-medium">VedaVida</h1>
+        <div className="mb-6 sm:mb-8 w-[150px] sm:w-[170px] lg:w-[185px] h-auto">
+          <Image
+            src="/logos/homepage-sitelogo.svg"
+            alt="Health Icon"
+            width={185}
+            height={115}
+            priority
+            className="object-contain"
+          />
+        </div>
+
         </div>
 
         {/* Info Section */}
@@ -106,7 +111,7 @@ const InvoicePage = () => {
         </div>
 
         {/* Footer */}
-        <footer className="mt-20 pb-8 text-center">
+        <footer className="mt-20  text-center">
           <p className="text-sm text-slate-600 mb-8">For any questions please contact us at</p>
           <div className="bg-[#1a3321] text-[#d4af37] py-6 px-4">
             <h3 className="font-bold mb-2">VedaVida</h3>
