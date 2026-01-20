@@ -73,7 +73,7 @@ export default function Navbar() {
         }
       `}
     >
-      <div className="mx-auto max-w-[1440px] px-4 sm:px-6">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-0">
         <div className="flex h-16 md:h-20 items-center justify-between">
           {/* LOGO */}
           <Link href="/" className="flex items-center">

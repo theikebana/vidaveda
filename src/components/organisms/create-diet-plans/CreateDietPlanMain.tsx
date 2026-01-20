@@ -1,11 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import DietaryRestrictions from "./steps/DietaryRestrictions";
 import GoalsAndPreferences from "./steps/GoalsAndPreferences";
+import ChooseYourDietPlan from "./steps/ChooseYourDietPlan";
 
 const steps = [
-  { label: "Dietary Restrictions", component: DietaryRestrictions },
+ 
   { label: "Goals & Preferences", component: GoalsAndPreferences },
+  { label: "Dietary Restrictions", component: DietaryRestrictions },
+  { label: "Choose Your Diet Plan", component: ChooseYourDietPlan },  
 ];
 
 const CreateDietPlanMain = () => {
@@ -18,7 +21,7 @@ const CreateDietPlanMain = () => {
   const StepComponent = steps[activeStep]?.component; // ✅ SAFE
 
   return (
-    <div className="relative max-w-6xl mx-auto">
+    <div className="relative max-w-[1440px]  mx-auto">
 
       {/* ===== FLOATING TABS ===== */}
       <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-[90%] z-10">
@@ -45,7 +48,7 @@ const CreateDietPlanMain = () => {
       </div>
 
       {/* ===== MAIN CARD ===== */}
-      <div className="bg-[#F8FAF7] rounded-4xl border border-[#CEDCC7] p-8 pt-24">
+      <div className="bg-[#F8FAF7]  rounded-4xl border border-[#CEDCC7] p-8 pt-12">
         {StepComponent && (
           <StepComponent
                       selectedAllergies={selectedAllergies}
