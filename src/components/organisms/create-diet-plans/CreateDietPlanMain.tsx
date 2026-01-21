@@ -5,6 +5,9 @@ import GoalsAndPreferences from "./steps/GoalsAndPreferences";
 import ChooseYourDietPlan from "./steps/ChooseYourDietPlan";
 import CreateAiDietPlan from "./steps/CreateAiDietPlan/CreateAiDietPlan";
 import HealthExpert from "./steps/HealthExperts";
+import DietitionDetails from "./steps/DietitionDetails";
+import CheckOut from "./steps/CheckOut";
+import ConfirmationScreen from "./steps/ConfirmationScreen";
 
 const steps = [
 
@@ -13,6 +16,9 @@ const steps = [
   { label: "Choose Your Diet Plan", component: ChooseYourDietPlan },
   { label: "Create AI Diet Plan", component: CreateAiDietPlan },
   { label: "Helath Expert", component: HealthExpert },
+  { label: "Dietition Details", component: DietitionDetails },
+  { label: "Check Out", component: CheckOut },
+  { label: "Confirmation", component: ConfirmationScreen },
 
 ];
 

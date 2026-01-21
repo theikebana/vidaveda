@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { FiChevronRight } from "react-icons/fi";
-import DoctorIntro from "./modules/DoctorIntro";
-import DoctorEducation from "./modules/DoctorEducation";
-import SpecialtiesAndServices from "./modules/SpecialtiesAndServices";
+import DoctorIntro from "../../../components/organisms/DoctorIntro";
+import DoctorEducation from "../../../components/organisms/DoctorEducation";
+import SpecialtiesAndServices from "../../../components/organisms/SpecialtiesAndServices";
 import ReviewsAndRatings from "@/components/organisms/ReviewsAndRatings";
 import Availability from "@/components/organisms/Availability";
 import BookAppointment from "@/components/organisms/BookAppointment";
