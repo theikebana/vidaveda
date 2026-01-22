@@ -5,6 +5,7 @@ import { SearchBar } from "@/components/SearchBar";
 import { HerbIcon } from "../components/HerbIcon";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import PageHeroTitle from "@/components/molecule/PageHeroTitle";
 
 export default function Home() {
   const ecosystemServices = [
@@ -15,36 +16,17 @@ export default function Home() {
       ),
       href: "/knowledge-for-herbs",
     },
-    {
-      title: "Health Consultation",
-      icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />,
-      href: "/health-consultation",
-    },
-    {
-      title: "Diagnostic",
-      icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />,
-      href: "/diagnostic",
-    },
-    {
-      title: "Shop",
-      icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />,
-      href: "/shop",
-    },
-    {
-      title: "Therapies",
-      icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />,
-      href: "/therapies",
-    },
-    {
-      title: "Diet Tracking",
-      icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />,
-      href: "/diet-tracking",
-    },
+    { title: "Health Consultation", icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />, href: "/health-consultation" },
+    { title: "Diagnostic", icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />, href: "/diagnostic" },
+    { title: "Shop", icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />, href: "/shop" },
+    { title: "Therapies", icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />, href: "/therapies" },
+    { title: "Diet Tracking", icon: <HerbIcon className="w-16 h-16 text-[#81c784]" />, href: "/diet-tracking" },
   ];
 
   return (
-    <div className="min-h-screen bg-[#fafafa] relative overflow-hidden">
-      {/* Decorative Images — DESKTOP ONLY (UNCHANGED) */}
+    <main className="min-h-screen bg-[#fafafa] relative overflow-hidden">
+
+      {/* Decorative Images — DESKTOP ONLY */}
       <motion.div
         initial={{ x: -120, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -76,53 +58,51 @@ export default function Home() {
       </motion.div>
 
       {/* Main Content */}
-      <main className="relative z-10 flex flex-col items-center min-h-screen px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-16">
+      <section className="relative z-10 flex flex-col items-center min-h-screen layout-wrapper pt-24 sm:pt-28 lg:pt-32 pb-16">
+
         {/* Logo */}
-        <div className="mb-6 sm:mb-8 w-[150px] sm:w-[170px] lg:w-[185px] h-auto">
+        <header className="mb-6 sm:mb-8 w-[150px] sm:w-[170px] lg:w-[185px] h-auto">
           <Image
             src="/logos/homepage-sitelogo.svg"
-            alt="Health Icon"
+            alt="Health Icon Logo"
             width={185}
             height={115}
             priority
             className="object-contain"
           />
-        </div>
+        </header>
 
         {/* Hero Text */}
-        <div className="flex flex-col gap-2 items-center text-center mt-10 sm:mt-14 lg:mt-20">
-          <p className="text-base sm:text-lg text-[#7a4e2d] font-satisfy">
-            Healthy Living Powered By
-          </p>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-[40px] font-unbounded font-light text-[#14532d] leading-tight max-w-[90%] sm:max-w-3xl">
-            Nature & Guided by Naturopathy
-          </h1>
-        </div>
+
+        <PageHeroTitle
+          title="Nature & Guided by Naturopathy"
+          eyebrow="Healthy Living Powered By" />
+
 
         {/* Search */}
-        <div className="w-full max-w-xl sm:max-w-2xl lg:max-w-4xl mt-10 sm:mt-14 lg:mt-16 mb-12">
+        <div className="w-full max-w-xl sm:max-w-2xl lg:max-w-4xl mt-10 sm:mt-14 lg:mt-16 mb-12" role="search">
           <SearchBar />
         </div>
 
         {/* Ecosystem */}
-        <div className="w-full max-w-7xl">
-          <h3 className="text-xl sm:text-3xl lg:text-4xl font-unbounded text-[#14532d] text-center mb-6 sm:mb-8">
+        <section className="w-full " aria-labelledby="ecosystem-heading">
+          <h2 id="ecosystem-heading" className="text-xl sm:text-3xl lg:text-4xl font-unbounded text-[#14532d] text-center mb-6 sm:mb-8">
             Our Ecosystem
-          </h3>
+          </h2>
 
-          {/* Grid tweaks ONLY for small screens */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-5">
+          <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-5">
             {ecosystemServices.map((service) => (
-              <EcosystemCard
-                key={service.title}
-                title={service.title}
-                href={service.href}
-              />
+              <li key={service.title}>
+                <EcosystemCard
+                  title={service.title}
+                  href={service.href}
+                />
+              </li>
             ))}
-          </div>
-        </div>
-      </main>
-    </div>
+          </ul>
+        </section>
+      </section>
+    </main>
   );
 }

@@ -1,49 +1,40 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
-import { DM_Sans, Unbounded, Satisfy } from "next/font/google";
+import { Unbounded, DM_Sans, Satisfy } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/organisms/Navbar";
-import Footer from "@/components/organisms/Footer";
-
-// Brand fonts
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  display: "swap",
-});
+import LayoutWrapper from "@/components/layout/LayoutWrapper"; // client component
 
 const unbounded = Unbounded({
-  variable: "--font-unbounded",
   subsets: ["latin"],
-  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-unbounded",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-dm-sans",
 });
 
 const satisfy = Satisfy({
-  variable: "--font-satisfy",
   subsets: ["latin"],
-  weight: "400",
-  display: "swap",
+  weight: ["400"],
+  variable: "--font-satisfy",
 });
 
 export const metadata: Metadata = {
   title: "Vedavida",
-  description: "Vedavida application",
+  description: "Vedavida ecommerce application",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${dmSans.variable} ${unbounded.variable} ${satisfy.variable}`}
+      className={`${unbounded.variable} ${dmSans.variable} ${satisfy.variable}`}
     >
-      <body className="antialiased font-sans text-foreground">
-        <Navbar />
-        {children}
-        <Footer />
-        
+      <body className="antialiased">
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );

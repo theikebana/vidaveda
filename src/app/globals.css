@@ -1,46 +1,91 @@
 @import "tailwindcss";
 
+/* ===================== Colors ===================== */
 :root {
-  /* Base layout colors */
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surface Colors */
+  --Background-Default: #ffffff;
+  --Text-Primary: #171717;
 
-  /* Brand palette */
-  /* Primary */
-  --color-primary-950: #0e311a; /* deep green (corrected from #0e311a) */
-  --color-primary-500: #c0964f;
+  /* Primary Colors */
+  --Primary-Color-Green: #0E311A;
+  --Primary-Color-Gold: #C0964F;
 
-  /* Secondary */
-  --color-secondary-900: #14532d;
-  --color-secondary-600: #556b2f;
-  --color-secondary-200: #d9c2a3;
+  /* Secondary Colors */
+  --Secondary-Color-Forest: #14532D;
+  --Secondary-Color-Olive: #556B2F;
+  --Secondary-Color-Sand: #D9C2A3;
 
-  /* Accent */
-  --color-accent-500: #e17c2a;
-  --color-accent-700: #7a4e2d;
+  /* Accent Colors */
+  --Accent-Color-Orange: #E17C2A;
+  --Accent-Color-Brown: #7A4E2D;
+
+  /* Fonts (Ensure they are imported correctly) */
+  --font-dm-sans: 'DM Sans', sans-serif;
+  --font-satisfy: 'Satisfy', cursive;
+  --font-unbounded: 'Unbounded', sans-serif;
 }
 
+/* ===================== Tailwind Customization ===================== */
 @theme inline {
-  /* Map CSS variables to Tailwind tokens */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  /* Mapping Colors to Tailwind Tokens */
+  --color-background: var(--Background-Default);
+  --color-foreground: var(--Text-Primary);
 
-  --color-primary-950: var(--color-primary-950);
-  --color-primary-500: var(--color-primary-500);
+  --color-primary-950: var(--Primary-Color-Green);
+  --color-primary-500: var(--Primary-Color-Gold);
 
-  --color-secondary-900: var(--color-secondary-900);
-  --color-secondary-600: var(--color-secondary-600);
-  --color-secondary-200: var(--color-secondary-200);
+  --color-secondary-900: var(--Secondary-Color-Forest);
+  --color-secondary-600: var(--Secondary-Color-Olive);
+  --color-secondary-200: var(--Secondary-Color-Sand);
 
-  --color-accent-500: var(--color-accent-500);
-  --color-accent-700: var(--color-accent-700);
+  --color-accent-500: var(--Accent-Color-Orange);
+  --color-accent-700: var(--Accent-Color-Brown);
 
-  /* Font tokens */
+  /* Font Families */
   --font-dm-sans: var(--font-dm-sans);
   --font-satisfy: var(--font-satisfy);
   --font-unbounded: var(--font-unbounded);
 }
 
+/* ===================== Tailwind-Like Utilities ===================== */
+@layer utilities {
+  /* Text Color Utilities */
+  .text-primary-green { color: var(--Primary-Color-Green) !important; }
+  .text-primary-gold { color: var(--Primary-Color-Gold) !important; }
+  .text-secondary-forest { color: var(--Secondary-Color-Forest); }
+  .text-secondary-olive { color: var(--Secondary-Color-Olive) !important; }
+  .text-secondary-sand { color: var(--Secondary-Color-Sand) !important; }
+  .text-accent-orange { color: var(--Accent-Color-Orange) !important; }
+  .text-accent-brown { color: var(--Accent-Color-Brown) !important; }
+  .text-background-default { color: var(--Background-Default) !important; }
+  .text-text-primary { color: var(--Text-Primary) !important; }
+
+  /* Background Color Utilities */
+  .bg-primary-green { background-color: var(--Primary-Color-Green); }
+  .bg-primary-gold { background-color: var(--Primary-Color-Gold); }
+  .bg-secondary-forest { background-color: var(--Secondary-Color-Forest); }
+  .bg-secondary-olive { background-color: var(--Secondary-Color-Olive); }
+  .bg-secondary-sand { background-color: var(--Secondary-Color-Sand); }
+  .bg-accent-orange { background-color: var(--Accent-Color-Orange); }
+  .bg-accent-brown { background-color: var(--Accent-Color-Brown); }
+  .bg-background-default { background-color: var(--Background-Default); }
+
+  /* Border Color Utilities */
+  .border-primary-green { border-color: var(--Primary-Color-Green); }
+  .border-primary-gold { border-color: var(--Primary-Color-Gold); }
+  .border-secondary-forest { border-color: var(--Secondary-Color-Forest); }
+  .border-secondary-olive { border-color: var(--Secondary-Color-Olive); }
+  .border-secondary-sand { border-color: var(--Secondary-Color-Sand); }
+  .border-accent-orange { border-color: var(--Accent-Color-Orange); }
+  .border-accent-brown { border-color: var(--Accent-Color-Brown); }
+
+  /* Font Family Utilities */
+  .font-dm-sans { font-family: var(--font-dm-sans); }
+  .font-satisfy { font-family: var(--font-satisfy); }
+  .font-unbounded { font-family: var(--font-unbounded); }
+}
+
+/* ===================== Dark Mode Styles ===================== */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -48,6 +93,7 @@
   }
 }
 
+/* ===================== General Body Styles ===================== */
 body {
   background: var(--background);
   color: var(--foreground);
@@ -57,4 +103,29 @@ body {
 
 .navbar-fixer {
   margin-top: 3rem; /* 48px */
+}
+
+/* ===================== Typography (Headings & Body Text) ===================== */
+
+/* Headings */
+.text-h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.2; font-weight: 300; color: var(--Primary-Color-Green); }
+.text-h2 { font-size: clamp(1.25rem, 3vw, 1.5rem); line-height: 1.3; font-weight: 400; color: var(--Primary-Color-Green); }
+.text-h3 { font-size: clamp(1.125rem, 2.5vw, 1.25rem); line-height: 1.3; font-weight: 500; color: var(--Primary-Color-Green); }
+.text-h4 { font-size: clamp(1rem, 2.2vw, 1.125rem); line-height: 1.4; font-weight: 500; color: var(--Primary-Color-Green); }
+.text-h5 { font-size: clamp(0.875rem, 2vw, 1rem); line-height: 1.5; font-weight: 500; color: var(--Primary-Color-Green); }
+.text-h6 { font-size: clamp(0.8125rem, 1.8vw, 0.875rem); line-height: 1.5; font-weight: 400; color: var(--Primary-Color-Green); }
+
+/* Body / Caption */
+.text-body-lg { font-size: clamp(0.9375rem, 2vw, 1rem); line-height: 1.6; color: #4B5563; }
+.text-body-md { font-size: clamp(0.8125rem, 1.8vw, 0.875rem); line-height: 1.6; color: #4B5563; }
+.text-caption { font-size: clamp(0.75rem, 1.6vw, 0.75rem); line-height: 1.5; color: #9CA3AF; }
+
+/* ===================== Font Families ===================== */
+.font-unbounded { font-family: var(--font-unbounded); }
+.font-dm-sans   { font-family: var(--font-dm-sans); }
+.font-satisfy   { font-family: var(--font-satisfy); }
+
+/* ===================== Layout Wrapper ===================== */
+.layout-wrapper {
+  @apply max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-0;
 }
