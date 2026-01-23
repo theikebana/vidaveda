@@ -26,7 +26,7 @@ export default function CategoryTabs({
         </h2>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+        <div className="flex justify-between flex-wrap items-center gap-4 sm:gap-6">
           <div className="flex flex-wrap items-center gap-3 sm:gap-4 lg:gap-6">
             {categories.map((category) => {
               const isActive =

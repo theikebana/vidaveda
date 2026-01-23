@@ -3,6 +3,7 @@
 import React from "react";
 import ProductAd from "../ProductAd";
 import { MoveRight, MinusCircle } from "lucide-react";
+import DummyAdd from "../dummyadd";
 
 interface BasicInformationData {
   generalName: string;
@@ -54,8 +55,8 @@ export default function BasicInformationContent({
       </div>
 
       {/* Ad */}
-      <ProductAd />
-
+      {/* <ProductAd /> */}
+<DummyAdd />
       {/* Description */}
       <div className="flex flex-col gap-4">
         <h3 className="text-lg  !text-[#0E311A] font-unbounded">Description</h3>

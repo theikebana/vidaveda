@@ -33,7 +33,7 @@ export default function DynamicHeroSection({
               </p>
             )}
 
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light text-[#062D1B] leading-tight mb-8">
+            <h1 className="text-h1 font-unbounded mb-8">
               {title}
             </h1>
 
@@ -63,7 +63,8 @@ export default function DynamicHeroSection({
           <div className="w-full md:w-auto flex justify-end">
             <div className="relative w-full max-w-[400px] aspect-[2.5/1] md:aspect-auto">
               <Image 
-                src={imageSrc} 
+                // src={imageSrc} 
+                src="/images/dummy-images/dynamichero-add.png"
                 alt="Promotion Banner" 
                 width={400}
                 height={160}

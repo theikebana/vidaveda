@@ -107,7 +107,7 @@ export default function ShoppingCart() {
             size: "1 FL OZ",
             quantity: 1,
             price: 300,
-            image: "/product.png",
+            image: "/images/dummy-images/shop-product-dummy.png",
         },
         {
             id: 2,
@@ -116,7 +116,7 @@ export default function ShoppingCart() {
             size: "1 FL OZ",
             quantity: 1,
             price: 300,
-            image: "/product.png",
+            image: "/images/dummy-images/shop-product-dummy.png",
         },
         {
             id: 3,
@@ -125,7 +125,7 @@ export default function ShoppingCart() {
             size: "1 FL OZ",
             quantity: 1,
             price: 300,
-            image: "/product.png",
+            image: "/images/dummy-images/shop-product-dummy.png",
         },
     ]);
 

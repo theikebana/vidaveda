@@ -5,6 +5,8 @@ import HeroSectionPages from "@/components/organisms/HeroSectionPages";
 import CategoryTabs from "@/components/organisms/CategoryTabs";
 import KnowledgeForHerbsCategoryRow from "@/components/molecule/KnowledgeForHerbsCategoryRow";
 import Pagination from "@/components/molecule/Pagination";
+import { herbData } from "@/data/herbdata";
+
 
 // Mock data - replace with actual data source
 interface HerbData {
@@ -15,57 +17,6 @@ interface HerbData {
   iconUrl?: string;
 }
 
-const mockHerbsData: HerbData[] = [
-  {
-    id: "1",
-    name: "Parsley",
-    category: "Herbs",
-    description: "Rich in vitamins and minerals, supports digestive wellness",
-    iconUrl: "/icons/herb-icon.svg",
-  },
-  {
-    id: "2",
-    name: "Sage",
-    category: "Herbs",
-    description: "Rich in vitamins and minerals, supports digestive wellness",
-    iconUrl: "/icons/herb-icon.svg",
-  },
-  {
-    id: "3",
-    name: "Sage",
-    category: "Herbs",
-    description: "Rich in vitamins and minerals, supports digestive wellness",
-    iconUrl: "/icons/herb-icon.svg",
-  },
-  {
-    id: "4",
-    name: "Sage",
-    category: "Herbs",
-    description: "Rich in vitamins and minerals, supports digestive wellness",
-    iconUrl: "/icons/herb-icon.svg",
-  },
-  {
-    id: "5",
-    name: "Sage",
-    category: "Herbs",
-    description: "Rich in vitamins and minerals, supports digestive wellness",
-    iconUrl: "/icons/herb-icon.svg",
-  },
-  {
-    id: "6",
-    name: "Sage",
-    category: "Herbs",
-    description: "Rich in vitamins and minerals, supports digestive wellness",
-    iconUrl: "/icons/herb-icon.svg",
-  },
-  {
-    id: "7",
-    name: "Sage",
-    category: "Herbs",
-    description: "Rich in vitamins and minerals, supports digestive wellness",
-    iconUrl: "/icons/herb-icon.svg",
-  },
-];
 
 const categories = [
   "All Category",
@@ -91,9 +42,9 @@ export default function KnowledgeForHerbsPage() {
   // Filter herbs based on active category
   const filteredHerbs = useMemo(() => {
     if (activeCategory === "All Category") {
-      return mockHerbsData;
+      return herbData;
     }
-    return mockHerbsData.filter(
+    return herbData.filter(
       (herb) => herb.category.toLowerCase() === activeCategory.toLowerCase()
     );
   }, [activeCategory]);
@@ -134,7 +85,8 @@ export default function KnowledgeForHerbsPage() {
                 category={herb.category}
                 description={herb.description}
                 iconUrl={herb.iconUrl}
-                href={`/knowledge-for-herbs/${herb.id}`}
+                // href={`/knowledge-for-herbs/${herb.id}`}
+                href="/dummy-icons/herb.svg"
               />
             ))
           ) : (

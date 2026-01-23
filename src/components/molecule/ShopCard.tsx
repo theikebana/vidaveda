@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Heart, ShoppingBag } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface ShopCardProps {
   title: string;
@@ -26,7 +27,7 @@ const ShopCard = ({
   onDetails,
 }: ShopCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
-
+  const router = useRouter();
   /* ---------------- Load favorite from localStorage ---------------- */
   useEffect(() => {
     const storedFavs = JSON.parse(
@@ -104,7 +105,8 @@ const ShopCard = ({
         {/* ---------------- Actions ---------------- */}
         <div className="mt-4 flex items-center justify-between">
           <button
-            onClick={onAddToCart}
+            // onClick={onAddToCart}
+            onClick={() => router.push("/shop/product-detail-page")}
             className="flex items-center gap-3 group cursor-pointer"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#c29e5d] text-white group-hover:bg-[#b08d4f] transition-all">

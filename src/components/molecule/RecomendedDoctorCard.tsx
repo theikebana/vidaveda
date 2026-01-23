@@ -105,7 +105,7 @@ const RecomendedDoctorCard = ({
       {/* Footer */}
       <div className="border-t border-[#0E311A50] px-4 sm:px-5 pt-3 pb-5 transition-all duration-300">
         <Link
-          href="/knowledge-for-herbs/health-consultation"
+          href="/health-consultation/doctor-info"
           className="w-full"
         >
           <button

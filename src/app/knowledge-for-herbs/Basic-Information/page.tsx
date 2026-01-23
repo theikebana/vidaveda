@@ -11,6 +11,13 @@ import CuresContent from "@/components/organisms/details-information/CuresConten
 import FactsContent from "@/components/organisms/details-information/FactsContent";
 import { factsContentData } from "@/data/factscontentdata";
 import GeneralContent from "@/components/organisms/details-information/GeneralContent";
+import { actionOfSageData } from "@/data/actionofherbsdata";
+import ActionOfHerb from "@/components/organisms/details-information/ActionOfHerbContent";
+import SingleHerbContent from "@/components/organisms/details-information/SingleHerbContent";
+import { singleHerbContentData } from "@/data/singleHerbContentData";
+import { multipleHerbsContentData } from "@/data/multipleHerbsContentData";
+import MultipleHerbsContent from "@/components/organisms/details-information/MultipleHerbsContent";
+import ProductsContent from "@/components/organisms/details-information/ProductsContent";
 const tabs = [
   "Basic Information",
   "Sage Cures",
@@ -33,7 +40,10 @@ export default function BasicInformationPage() {
     "Sage Cures": <CuresContent data={sageCuresContentData} />,
     "Sage Facts": <FactsContent data={factsContentData} />,
     "Sage General": <GeneralContent data={factsContentData} />,
-    Products: <ProductsModule data={sageBasicInformation} />,
+    "Action of Sage": <ActionOfHerb data={actionOfSageData} />,
+    "Single Herb": <SingleHerbContent heading="Sage" items={singleHerbContentData} />,
+    "Multiple Herbs": <MultipleHerbsContent heading="Sage" items={multipleHerbsContentData} />,
+    Products: <ProductsContent title="Sage" />,
   };
 
   return (

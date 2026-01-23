@@ -22,7 +22,7 @@ const KnowledgeForHerbsCategoryRow = ({
 }: KnowledgeForHerbsCategoryRowProps) => {
   return (
     <div
-    className="
+      className="
       flex flex-col sm:flex-row sm:items-center sm:justify-between
       gap-4 sm:gap-6
       p-4 sm:p-5 lg:p-6
@@ -34,19 +34,19 @@ const KnowledgeForHerbsCategoryRow = ({
       hover:border-[#14532D]
       hover:border-none
     "
-  >
-  
-  
+    >
+
+
       {/* Left Content */}
-      <div className="flex items-start gap-4 sm:gap-6 flex-1">
+      <div className="flex items-start gap-4  flex-1">
         {/* Icon */}
-        <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-[#14532D] flex items-center justify-center">
+        <div className="flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16  rounded-full bg-[#14532D] flex items-center justify-center">
           <Image
-            src={iconUrl}
+            src="/dummy-icons/herb.svg"
             alt={name}
-            width={40}
-            height={40}
-            className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12"
+            width={32}
+            height={32}
+            className="w-8 h-8 "
           />
         </div>
 
@@ -92,9 +92,9 @@ const KnowledgeForHerbsCategoryRow = ({
 
       {/* Right Content */}
       <div className="flex-shrink-0">
-  <Link
-    href={href}
-    className="
+        <Link
+          href={href}
+          className="
       flex items-center gap-2
       text-[#14532D]
       text-sm sm:text-base
@@ -104,21 +104,21 @@ const KnowledgeForHerbsCategoryRow = ({
       transition-all duration-500 ease-in-out
       hover:gap-3
     "
-  >
-    <span>View Details</span>
-    <Image
-      src="/icons/arrow-icon.svg"
-      alt="Arrow"
-      width={24}
-      height={24}
-      className="
+        >
+          <span>View Details</span>
+          <Image
+            src="/icons/arrow-icon.svg"
+            alt="Arrow"
+            width={24}
+            height={24}
+            className="
         w-5 h-5
         transition-transform duration-300 ease-out
         group-hover:translate-x-1
       "
-    />
-  </Link>
-</div>
+          />
+        </Link>
+      </div>
 
     </div>
   );
