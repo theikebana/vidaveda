@@ -4,30 +4,6 @@ import React from "react";
 import AddFoodModal from "../organisms/AddFoodModal";
 import ChangeFoodModal from "../organisms/ChangeFoodModal";
 
-/* ================= FIXED HEADERS ================= */
-const HEADERS = [
-  { key: "food", label: "Food" },
-  { key: "ph", label: "pH" },
-  { key: "serving", label: "Serving" },
-  { key: "wt", label: "Wt" },
-  { key: "gi", label: "GI" },
-  { key: "gl", label: "GL" },
-  { key: "cals", label: "Cals" },
-  { key: "carbs", label: "Carbs", highlight: true },
-  { key: "fats", label: "Fats", highlight: true },
-  { key: "prots", label: "Prots", highlight: true },
-  { key: "sod", label: "Sod" },
-  { key: "pot", label: "Pot" },
-  { key: "actions", label: "Mark As" },
-] as const;
-
-const SUMMARY_ROWS = [
-  "Total Diet",
-  "Current %Age",
-  "Total RDA",
-  "RDA %Age",
-];
-
 /* ================= TYPES ================= */
 type DietRow = {
   food: string;
@@ -44,13 +20,36 @@ type DietRow = {
   pot: number;
 };
 
+type Header = {
+  key: keyof DietRow | "actions"; // include "actions" column
+  label: string;
+  highlight?: boolean; // optional
+};
+
 type Meal = {
   title: string;
   time: string;
   data: DietRow[];
 };
 
+/* ================= HEADERS ================= */
+const HEADERS: Header[] = [
+  { key: "food", label: "Food" },
+  { key: "ph", label: "pH" },
+  { key: "serving", label: "Serving" },
+  { key: "wt", label: "Wt" },
+  { key: "gi", label: "GI" },
+  { key: "gl", label: "GL" },
+  { key: "cals", label: "Cals" },
+  { key: "carbs", label: "Carbs", highlight: true },
+  { key: "fats", label: "Fats", highlight: true },
+  { key: "prots", label: "Prots", highlight: true },
+  { key: "sod", label: "Sod" },
+  { key: "pot", label: "Pot" },
+  { key: "actions", label: "Mark As" },
+];
 
+const SUMMARY_ROWS = ["Total Diet", "Current %Age", "Total RDA", "RDA %Age"];
 
 /* ================= DATA ================= */
 const commonData: DietRow[] = [
@@ -86,21 +85,9 @@ const commonData: DietRow[] = [
 
 /* ================= MEALS ================= */
 const meals: Meal[] = [
-  {
-    title: "Breakfast",
-    time: "8:00 – 9:00 am",
-    data: commonData,
-  },
-  {
-    title: "Lunch",
-    time: "1:00 – 2:00 pm",
-    data: commonData,
-  },
-  {
-    title: "Dinner",
-    time: "8:00 – 9:00 pm",
-    data: commonData,
-  },
+  { title: "Breakfast", time: "8:00 – 9:00 am", data: commonData },
+  { title: "Lunch", time: "1:00 – 2:00 pm", data: commonData },
+  { title: "Dinner", time: "8:00 – 9:00 pm", data: commonData },
 ];
 
 /* ================= COMPONENT ================= */
@@ -116,9 +103,7 @@ export default function DietChartTrackingTable() {
           {/* MEAL TITLE */}
           <div className="flex justify-between items-center">
             <div className="mb-4">
-              <h2 className="text-[#1a4d2e] font-semibold text-lg">
-                {meal.title}
-              </h2>
+              <h2 className="text-[#1a4d2e] font-semibold text-lg">{meal.title}</h2>
               <p className="text-sm text-gray-500">{meal.time}</p>
             </div>
 
@@ -140,12 +125,7 @@ export default function DietChartTrackingTable() {
                 <thead>
                   <tr>
                     {HEADERS.map((h) => (
-                      <th
-                        key={h.key}
-                        className="text-left font-medium px-4 py-3"
-                      >
-                        {h.label}
-                      </th>
+                      <th key={h.key} className="text-left font-medium px-4 py-3">{h.label}</th>
                     ))}
                   </tr>
                 </thead>
@@ -165,19 +145,13 @@ export default function DietChartTrackingTable() {
           `}
                         >
                           {h.key === "actions" ? (
-                            <div className="flex items-center gap-2 border-l  border-[#1a4d2e] text-[#0E311A]">
-                              <button
-                                className="flex items-center gap-1.5 px-2 py-1  text-sm cursor-pointer"
-                                aria-label="Taken"
-                              >
+                            <div className="flex items-center gap-2 border-l border-[#1a4d2e] text-[#0E311A]">
+                              <button className="flex items-center gap-1.5 px-2 py-1  text-sm cursor-pointer" aria-label="Taken">
                                 <Check size={16} className="rounded-full border border-[#1a4d2e] text-[#1a4d2e] text-xs" />
                                 <span>Taken</span>
                               </button>
 
-                              <button
-                                className="flex items-center gap-1.5 px-2 py-1  text-sm cursor-pointer"
-                                aria-label="Skipped"
-                              >
+                              <button className="flex items-center gap-1.5 px-2 py-1  text-sm cursor-pointer" aria-label="Skipped">
                                 <X size={16} className="rounded-full border border-red-600 text-red-600 text-xs" />
                                 <span>Skipped</span>
                               </button>
@@ -190,7 +164,6 @@ export default function DietChartTrackingTable() {
                     </tr>
                   ))}
                 </tbody>
-
               </table>
             </div>
 
@@ -201,12 +174,8 @@ export default function DietChartTrackingTable() {
                 <span className="text-sm text-[#C0964F]">( Optional )</span>
               </div>
 
-              <button className="bg-[#1a4d2e] text-white rounded-lg py-2 ">
-                O Chicken
-              </button>
-              <button className="bg-[#1a4d2e] text-white rounded-lg py-2 ">
-                Dynamic Diet
-              </button>
+              <button className="bg-[#1a4d2e] text-white rounded-lg py-2 ">O Chicken</button>
+              <button className="bg-[#1a4d2e] text-white rounded-lg py-2 ">Dynamic Diet</button>
             </div>
           </div>
 
@@ -253,10 +222,7 @@ export default function DietChartTrackingTable() {
                 </tr>
               ))}
             </tbody>
-
           </table>
-
-
         </div>
       ))}
 

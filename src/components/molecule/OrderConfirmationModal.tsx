@@ -40,7 +40,7 @@ const OrderConfirmationModal = ({ onClose }: OrderConfirmationModalProps) => {
              <button
           onClick={onClose}
           className="mt-6 bg-[#1a4d2e] text-white px-10 py-3 rounded-full font-medium hover:bg-[#143b24] transition"
-          onclick=""
+          
         >
           Ok
         </button>
