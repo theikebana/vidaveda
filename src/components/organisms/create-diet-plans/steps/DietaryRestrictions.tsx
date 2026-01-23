@@ -73,7 +73,8 @@ const DietaryRestrictions = ({
         <h3 className="text-xl font-medium text-[#060606] mb-2">
           Food Allergies
         </h3>
-        <div className="flex flex-wrap gap-4">
+        <p className="text-black">Select any foods you're allergic to. This is crucial for your safety.</p>
+        <div className="flex flex-wrap gap-4 mt-4">
           {["Nuts", "Dairy", "Eggs", "Gluten"].map((item) => (
             <Pill
               key={item}
@@ -150,6 +151,13 @@ const DietaryRestrictions = ({
           className="w-full border-b border-gray-300 px-4 py-3 text-black outline-none focus:border-[#0E311A]"
         />
       </section>
+
+      
+      <div className="max-w-sm mt-12">
+        <button className="w-fit bg-[#14532D] text-white py-3 px-12 rounded-full hover:bg-[#142e20] transition-all active:scale-[0.98]">
+          Next
+        </button>
+      </div>
     </>
   );
 };

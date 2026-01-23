@@ -20,7 +20,7 @@ export default function ProductDetailPage() {
                     priority
                 />
             </div>
-            <div className="container mx-auto px-6 ">
+            <div className="layout-wrapper mx-auto px-6 ">
                 {/* 12-column grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 

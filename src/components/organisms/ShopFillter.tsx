@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Check } from 'lucide-react';
 
 interface FilterCategory {
@@ -11,7 +11,7 @@ interface ShopFilterProps {
   categories: FilterCategory[];
   minPrice?: number;
   maxPrice?: number;
-  onFilterChange?: (filters: any) => void;
+  onFilterChange?: (filters: string[]) => void; // Emit selected category options
 }
 
 const ShopFilter = ({ 
@@ -22,6 +22,18 @@ const ShopFilter = ({
 }: ShopFilterProps) => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 500 });
+
+  // Emit changes to parent
+  useEffect(() => {
+    onFilterChange?.(selectedFilters);
+  }, [selectedFilters, onFilterChange]);
+
+  const handleToggle = (option: string) => {
+    const next = selectedFilters.includes(option)
+      ? selectedFilters.filter(f => f !== option)
+      : [...selectedFilters, option];
+    setSelectedFilters(next);
+  };
 
   return (
     <div className="w-full max-w-[360px] sticky top-0 overflow-hidden rounded-2xl border border-[#e2ece5] bg-[#f7faf7] font-sans">
@@ -46,16 +58,12 @@ const ShopFilter = ({
                     <input 
                       type="checkbox" 
                       className="hidden"
-                      onChange={() => {
-                        const next = selectedFilters.includes(option)
-                          ? selectedFilters.filter(f => f !== option)
-                          : [...selectedFilters, option];
-                        setSelectedFilters(next);
-                      }}
+                      checked={selectedFilters.includes(option)}
+                      onChange={() => handleToggle(option)}
                     />
                     {selectedFilters.includes(option) && <Check size={16} className="text-white" strokeWidth={3} />}
                   </div>
-                  <span className="text-md  text-[#0a0a0a]">{option}</span>
+                  <span className="text-md text-[#0a0a0a]">{option}</span>
                 </label>
               ))}
             </div>

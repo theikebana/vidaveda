@@ -2,8 +2,19 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 
-const ScheduleDietModal = () => {
-  const [selections, setSelections] = useState<{ morning: string; dinner: string }>({
+interface ScheduleDietModalProps {
+  onClose: () => void;
+  onPaymentSuccess: () => void;
+}
+
+const ScheduleDietModal = ({
+  onClose,
+  onPaymentSuccess,
+}: ScheduleDietModalProps) => {
+  const [selections, setSelections] = useState<{
+    morning: string;
+    dinner: string;
+  }>({
     morning: "",
     dinner: "",
   });
@@ -17,7 +28,10 @@ const ScheduleDietModal = () => {
           <h2 className="text-2xl text-[#0B0B0B] font-unbounded">
             Schedule Your Meal
           </h2>
-          <button className="text-gray-400 hover:text-gray-600 transition">
+          <button
+            onClick={onClose}
+            className="text-gray-400 hover:text-gray-600 transition cursor-pointer"
+          >
             <X size={28} />
           </button>
         </div>
@@ -86,7 +100,10 @@ const ScheduleDietModal = () => {
             ))}
 
             {/* CTA */}
-            <button className="bg-[#1a4d2e] text-white px-12 py-3 rounded-full font-semibold text-lg hover:bg-[#143b24] transition shadow-lg">
+            <button
+              onClick={onPaymentSuccess}
+              className="bg-[#1a4d2e] text-white px-12 py-3 rounded-full font-semibold text-lg hover:bg-[#143b24] transition shadow-lg"
+            >
               Pay
             </button>
           </div>

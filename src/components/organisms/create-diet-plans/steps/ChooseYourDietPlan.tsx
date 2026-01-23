@@ -8,7 +8,7 @@ const ChooseYourDietPlan = () => {
 
   return (
     <div className="max-w-full mx-auto  bg-[#f9faf7] rounded-3xl">
-      <h2 className="text-2xl font-semibold text-[#1a3d2c] mb-10 px-2">
+      <h2 className="text-h2 font-unbounded mb-8 px-2">
         Choose To Proceed Further
       </h2>
 
@@ -172,6 +172,11 @@ const ChooseYourDietPlan = () => {
       </div>
 
 
+      <div className="max-w-sm mt-12">
+        <button className="w-fit bg-[#14532D] text-white py-3 px-12 rounded-full hover:bg-[#142e20] transition-all active:scale-[0.98]">
+        Gernate AI Diet Plan
+        </button>
+      </div>
     </div>
   );
 };

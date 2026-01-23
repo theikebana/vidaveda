@@ -103,14 +103,14 @@ const RecomendedDoctorCard = ({
       </div>
 
       {/* Footer */}
-      <div className="border-t border-[#0E311A50] px-4 sm:px-5 pt-3 pb-5 transition-all duration-300">
+      <div className="border-t border-[#0E311A50] px-4 sm:px-5 pt-3 pb-5 transition-all duration-300 ">
         <Link
           href="/health-consultation/doctor-info"
-          className="w-full"
+          className="w-full "
         >
           <button
             type="button"
-            className="w-full flex items-center justify-center sm:justify-start gap-3 group"
+            className="w-full flex items-center justify-center sm:justify-start gap-3 group cursor-pointer"
           >
             <span className="text-[#14532D] text-sm sm:text-base transition-all duration-300 group-hover:font-medium">
               Book Now

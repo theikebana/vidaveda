@@ -3,6 +3,7 @@
 import { Star, Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const paymentIcons = [
   { src: "/icons/payment-icons/VisaElectron.svg", alt: "Visa", width: 32, height: 12 },
@@ -13,7 +14,7 @@ const paymentIcons = [
 
 export const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
-
+  const router = useRouter();
   const increment = () => setQuantity(prev => prev + 1);
   const decrement = () => setQuantity(prev => Math.max(prev - 1, 1));
 
@@ -85,13 +86,22 @@ export const ProductDetails = () => {
 
         {/* Buttons */}
         <div className="flex gap-3">
-          <button className="w-full bg-[#14532D] text-white py-3 rounded-full text-md hover:bg-[#142e20] transition-all active:scale-[0.98]">
-            Buy Now
-          </button>
-          <button className="w-full border border-[#14532D] text-[#14532D] py-3 rounded-full text-md hover:bg-gray-50 transition-all active:scale-[0.98]">
-            Add to Cart
-          </button>
-        </div>
+      {/* Buy Now */}
+      <button
+        onClick={() => router.push("/shop/cart/checkout")}
+        className="w-full bg-[#14532D] text-white py-3 cursor-pointer rounded-full text-md hover:bg-[#142e20] transition-all active:scale-[0.98]"
+      >
+        Buy Now
+      </button>
+
+      {/* Add to Cart */}
+      <button
+        className="w-full border border-[#14532D] text-[#14532D] py-3 cursor-pointer rounded-full text-md hover:bg-gray-50 transition-all active:scale-[0.98]"
+        onClick={() => router.push("/shop/cart")}
+      >
+        Add to Cart
+      </button>
+    </div>
       </div>
 
       {/* --- Payment Logos --- */}

@@ -1,7 +1,17 @@
 "use client";
 
 import { FiCalendar, FiChevronDown } from "react-icons/fi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PhoneInput from "react-phone-number-input";
+import {
+  isValidPhoneNumber,
+  parsePhoneNumber,
+} from "libphonenumber-js";
+import "react-phone-number-input/style.css";
+
+/* =======================
+   Types
+======================= */
 
 interface BookAppointmentProps {
   defaultName?: string;
@@ -11,19 +21,20 @@ interface BookAppointmentProps {
 
 export interface AppointmentData {
   name: string;
-  phone: string;
+  phone: string; // E.164 (+919876543210)
   email: string;
   serviceType: string;
   preferredDate: string;
   preferredTime: string;
 }
 
+type Errors = Partial<Record<keyof AppointmentData, string>>;
+
 /* =======================
    Shared Classes
 ======================= */
 
-const labelClass =
-  "block text-[#818181] font-medium ";
+const labelClass = "block text-[#818181] font-medium";
 
 const inputBaseClass = `
   w-full px-2 py-2
@@ -32,7 +43,6 @@ const inputBaseClass = `
   outline-none
   focus:border-b-[#AAB859]
   transition-colors duration-300
-  cursor-pointer-none
 `;
 
 const selectBaseClass = `
@@ -43,9 +53,9 @@ const selectBaseClass = `
   appearance-none
   focus:border-b-[#AAB859]
   transition-colors duration-300
-  mb-2
-  cursor-pointer
 `;
+
+const errorClass = "text-sm text-red-600 mt-1";
 
 /* =======================
    Component
@@ -65,17 +75,121 @@ export default function BookAppointment({
     preferredTime: "",
   });
 
+  const [errors, setErrors] = useState<Errors>({});
+
+  /* =======================
+     Load Razorpay Script
+  ======================= */
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+  /* =======================
+     Validation
+  ======================= */
+
+  const validate = (): Errors => {
+    const newErrors: Errors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!formData.phone || !isValidPhoneNumber(formData.phone)) {
+      newErrors.phone = "Enter a valid phone number";
+    }
+
+    if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+      newErrors.email = "Enter a valid email address";
+    }
+
+    if (!formData.serviceType) {
+      newErrors.serviceType = "Please select a service";
+    }
+
+    if (!formData.preferredDate) {
+      newErrors.preferredDate = "Please select a date";
+    }
+
+    if (!formData.preferredTime) {
+      newErrors.preferredTime = "Please select a time";
+    }
+
+    return newErrors;
+  };
+
+  /* =======================
+     Payment Logic
+  ======================= */
+
+  const startPayment = async () => {
+    const phone = parsePhoneNumber(formData.phone);
+    const isIndia = phone?.country === "IN";
+
+    if (isIndia) {
+      // ---------- RAZORPAY ----------
+      const res = await fetch("/api/razorpay/order", {
+        method: "POST",
+      });
+      const order = await res.json();
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: order.amount,
+        currency: order.currency,
+        order_id: order.id,
+        name: "Demo Clinic",
+        description: "Appointment Booking",
+        handler: function () {
+          window.location.href = "/payment-success";
+        },
+        theme: {
+          color: "#14532D",
+        },
+      };
+
+      // @ts-ignore
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } else {
+      // ---------- STRIPE ----------
+      window.location.href = "/stripe-checkout";
+    }
+  };
+
+  /* =======================
+     Handlers
+  ======================= */
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) return;
+
     onSubmit?.(formData);
+
+    // 🔥 Trigger payment
+    await startPayment();
   };
+
+  /* =======================
+     Data
+  ======================= */
 
   const timeSlots = Array.from({ length: 24 }, (_, i) => {
     const hour = i < 12 ? (i === 0 ? 12 : i) : i - 12;
@@ -88,6 +202,10 @@ export default function BookAppointment({
     date.setDate(date.getDate() + i + 1);
     return date.toISOString().split("T")[0];
   });
+
+  /* =======================
+     UI
+  ======================= */
 
   return (
     <div className="bg-[#F8FAF7] border border-[#14532D]/50 rounded-2xl p-6 sm:p-8">
@@ -108,23 +226,26 @@ export default function BookAppointment({
             value={formData.name}
             onChange={handleChange}
             placeholder="Enter your full name"
-            required
             className={inputBaseClass}
           />
+          {errors.name && <p className={errorClass}>{errors.name}</p>}
         </div>
 
         {/* Phone */}
         <div>
           <label className={labelClass}>Phone Number</label>
-          <input
-            type="tel"
-            name="phone"
+          <PhoneInput
+            international
+            defaultCountry="IN"
             value={formData.phone}
-            onChange={handleChange}
-            placeholder="Enter your phone number"
-            required
-            className={inputBaseClass}
+            onChange={(value) => {
+              setFormData((prev) => ({ ...prev, phone: value || "" }));
+              setErrors((prev) => ({ ...prev, phone: undefined }));
+            }}
+            className="border-b border-[#E2E2E2] focus-within:border-[#AAB859]"
+            inputClassName="!text-black !bg-transparent !px-2 !py-2"
           />
+          {errors.phone && <p className={errorClass}>{errors.phone}</p>}
         </div>
 
         {/* Email */}
@@ -135,10 +256,10 @@ export default function BookAppointment({
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder="Enter your email address"
-            required
+            placeholder="Enter your email"
             className={inputBaseClass}
           />
+          {errors.email && <p className={errorClass}>{errors.email}</p>}
         </div>
 
         {/* Service Type */}
@@ -149,18 +270,20 @@ export default function BookAppointment({
               name="serviceType"
               value={formData.serviceType}
               onChange={handleChange}
-              required
               className={selectBaseClass}
             >
               <option value="">Select service type</option>
-              {serviceTypes.map((service, index) => (
-                <option key={index} value={service} className="cursor-pointer">
+              {serviceTypes.map((service) => (
+                <option key={service} value={service}>
                   {service}
                 </option>
               ))}
             </select>
             <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
           </div>
+          {errors.serviceType && (
+            <p className={errorClass}>{errors.serviceType}</p>
+          )}
         </div>
 
         {/* Preferred Date */}
@@ -171,29 +294,25 @@ export default function BookAppointment({
               name="preferredDate"
               value={formData.preferredDate}
               onChange={handleChange}
-              required
               className={selectBaseClass}
             >
               <option value="">Select preferred date</option>
-              {dateOptions.map((date) => {
-                const formattedDate = new Date(date).toLocaleDateString(
-                  "en-US",
-                  {
+              {dateOptions.map((date) => (
+                <option key={date} value={date}>
+                  {new Date(date).toLocaleDateString("en-US", {
                     weekday: "short",
-                    year: "numeric",
                     month: "short",
                     day: "numeric",
-                  }
-                );
-                return (
-                  <option key={date} value={date} className="cursor-pointer">
-                    {formattedDate}
-                  </option>
-                );
-              })}
+                    year: "numeric",
+                  })}
+                </option>
+              ))}
             </select>
             <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
           </div>
+          {errors.preferredDate && (
+            <p className={errorClass}>{errors.preferredDate}</p>
+          )}
         </div>
 
         {/* Preferred Time */}
@@ -204,24 +323,26 @@ export default function BookAppointment({
               name="preferredTime"
               value={formData.preferredTime}
               onChange={handleChange}
-              required
               className={selectBaseClass}
             >
               <option value="">Select preferred time</option>
-              {timeSlots.map((time, index) => (
-                <option key={index} value={time} className="cursor-pointer">
+              {timeSlots.map((time) => (
+                <option key={time} value={time}>
                   {time}
                 </option>
               ))}
             </select>
             <FiChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
           </div>
+          {errors.preferredTime && (
+            <p className={errorClass}>{errors.preferredTime}</p>
+          )}
         </div>
 
         {/* Submit */}
         <button
           type="submit"
-          className="w-full bg-[#14532D] text-white py-3 rounded-full font-light cursor-pointer hover:bg-[#0E311A] transition-colors text-base sm:text-lg"
+          className="w-full bg-[#14532D] text-white py-3 rounded-full font-light hover:bg-[#0E311A] transition-colors text-base sm:text-lg"
         >
           Pay & Submit
         </button>

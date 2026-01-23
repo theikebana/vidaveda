@@ -86,7 +86,7 @@ export default function KnowledgeForHerbsPage() {
                 description={herb.description}
                 iconUrl={herb.iconUrl}
                 // href={`/knowledge-for-herbs/${herb.id}`}
-                href="/dummy-icons/herb.svg"
+                href="/knowledge-for-herbs/Basic-Information"
               />
             ))
           ) : (

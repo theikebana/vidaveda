@@ -163,7 +163,7 @@ export default function HealthConsultationPage() {
 
             {/* Book Appointment */}
             <BookAppointment
-              defaultName="Diego Martin"
+              defaultName=""
               serviceTypes={doctorData.serviceTypes}
               onSubmit={handleAppointmentSubmit}
             />

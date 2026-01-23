@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Unbounded, DM_Sans, Satisfy } from "next/font/google";
 import "./globals.css";
 import LayoutWrapper from "@/components/layout/LayoutWrapper"; // client component
+import "react-phone-number-input/style.css";
 
 const unbounded = Unbounded({
   subsets: ["latin"],
